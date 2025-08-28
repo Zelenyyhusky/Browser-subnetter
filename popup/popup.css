@@ -1,6 +1,6 @@
 body {
   width: 300px; /* your desired width */
-  height: 300px;
+  height: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 table, th, td {
