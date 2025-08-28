@@ -1,0 +1,14 @@
+{
+  "name": "Pat's Browser Subnetter",
+  "description": "Quick Subnet conversions in the browser!",
+  "version": "0.1",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "images/icon.png"
+  },
+  "permissions": [
+  "activeTab",
+  "scripting"
+ ]
+}

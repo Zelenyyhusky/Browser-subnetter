@@ -1,0 +1,44 @@
+body {
+  width: 300px; /* your desired width */
+  height: 300px;
+}
+table, th, td {
+  border:1px solid black;
+  border-collapse: collapse;
+  text-align: left;
+  padding: 2px;
+}
+p {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+button {
+  background-color: #04AA6D; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+  transition-duration: 0.1s;
+  border: 2px solid #04AA6D
+}
+
+button:hover {
+  background-color: white;
+  color: #04AA6D;
+  border: 2px solid #04AA6D
+}
+
+input {
+    padding: 8px 2px;
+    margin: 2px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: auto;
+}

@@ -1,0 +1,82 @@
+<html>
+<head>
+<link rel="stylesheet" href="popup.css">
+<script src="popup.js"></script>
+</head>
+  <body>
+    <h2>Pat's Subnet calculator</h2>
+        <tr>
+            <td>
+                <input type="text" id="networkinput" size="15" maxlength="15" value="192.168.128.0">
+            </td>
+            <td>
+                /
+            </td>
+            <td>
+                <input type="text" id="mask" size="2" maxlength="2" value="24">
+            </td>
+            <td>
+                <Button id="SubmitButton">Go!</Button>
+            </td>
+        </tr>
+    <hr>
+    <table>
+    <tr>
+        <th>
+            <p>Network Address</p>
+        </td>
+        <td>
+            <p id="netaddr">192.168.128.0</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <p>Broadcast Address</p>
+        </th>
+        <td>
+            <p id="broadcastaddr">192.168.128.255</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <p>Subnet Mask</p>
+        </td>
+        <td>
+            <p id="netmask">255.255.255.0</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <p>Wildcard Mask</p>
+        </td>
+        <td>
+            <p id="wildmask">0.0.0.255</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <p>Usable Range</p>
+        </th>
+        <td>
+            <p id="usablerng">192.168.128.1 - 192.168.128.254</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <p>Host Count</p>
+        </th>
+        <td>
+            <p id="hostcount">254</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <p>Current Use</p>
+        </th>
+        <td>
+            <a id="currentuse" href="https://www.rfc-editor.org/rfc/rfc1918.html">Private-Use</a>
+        </td>
+    </tr>
+    </table>   
+  </body>
+</html>
