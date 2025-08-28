@@ -1,6 +1,7 @@
 body {
   width: 300px; /* your desired width */
   height: 300px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 table, th, td {
   border:1px solid black;
@@ -11,13 +12,14 @@ table, th, td {
 p {
     font-size: 14px;
     font-weight: normal;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 button {
   background-color: #04AA6D; /* Green */
   border: none;
   color: white;
-  padding: 8px 24px;
+  padding: 6px 24px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
