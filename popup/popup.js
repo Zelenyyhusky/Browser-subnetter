@@ -302,5 +302,7 @@ function address_classification(addr_list, cidr) {
         return ["Public IP space", "nolink"]
 
     }
+
+    return ["Public IP space", "nolink"]
     
 }
