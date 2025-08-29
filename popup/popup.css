@@ -16,7 +16,7 @@ p {
 }
 
 button {
-  background-color: #04AA6D; /* Green */
+  background-color: #5BA546; /* Green */
   border: none;
   color: white;
   padding: 6px 24px;
@@ -26,13 +26,13 @@ button {
   font-size: 16px;
   border-radius: 8px;
   transition-duration: 0.1s;
-  border: 2px solid #04AA6D
+  border: 2px solid #5BA546
 }
 
 button:hover {
   background-color: white;
-  color: #04AA6D;
-  border: 2px solid #04AA6D
+  color: #5BA546;
+  border: 2px solid #5BA546
 }
 
 input {
