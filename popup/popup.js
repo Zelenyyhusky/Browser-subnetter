@@ -3,7 +3,21 @@ var curMask = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('SubmitButton').addEventListener('click', calculateNetwork);
+    document.getElementById('networkinput').addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById('SubmitButton').click();
+        }
+    });
+    document.getElementById('mask').addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById('SubmitButton').click();
+        }
+    });
 });
+
+
 
 function calculateNetwork() {
     var newNetworkStr = document.getElementById("networkinput").value;
