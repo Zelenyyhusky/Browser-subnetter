@@ -6,17 +6,38 @@ body {
 table, th, td {
   border:1px solid black;
   border-collapse: collapse;
-  width: 300px;
+  width: 288px;
   text-align: left;
   padding: 2px;
 }
+
+#ipv6 {
+  width: 425px
+} 
+
+#ipv6 table {
+  border:1px solid black;
+  border-collapse: collapse;
+  width: 420px;
+  text-align: left;
+  padding: 2px;
+}
+
+#ipv6 th {
+  border:1px solid black;
+  border-collapse: collapse;
+  width: auto;
+  text-align: left;
+  padding: 2px;
+}
+
 p {
     font-size: 14px;
     font-weight: normal;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-button {
+.gobutton {
   background-color: #5BA546; /* Green */
   border: none;
   color: white;
@@ -27,7 +48,7 @@ button {
   font-size: 16px;
   border-radius: 8px;
   transition-duration: 0.1s;
-  border: 2px solid #5BA546
+  border: 2px solid #5BA546;
 }
 
 button:hover {
@@ -44,4 +65,39 @@ input {
     border-radius: 4px;
     box-sizing: border-box;
     width: auto;
+}
+
+/* Style the tab content */
+.tabcontent {
+  border-top: none;
+  background-color: rgb(251, 255, 247);
+  border: 1px gray solid;
+  padding: 5px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+  border: 2px #5BA546 solid;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  border-radius: 2px;
+  border: 1px gray solid;
+  text-align: center;
+  background-color: inherit;
+  cursor: pointer;
+  padding: 5px;
+  transition: 0.3s;
+}
+
+.tab {
+  overflow: hidden;
+  padding-bottom: 10px;
 }

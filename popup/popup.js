@@ -15,10 +15,25 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('SubmitButton').click();
         }
     });
+    document.getElementById('SubmitButtonv6').addEventListener('click', calculateNetworkv6);
+    document.getElementById('networkinputv6').addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById('SubmitButtonv6').click();
+        }
+    });
+    document.getElementById('maskv6').addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById('SubmitButtonv6').click();
+        }
+    });
 });
 
 
-
+//
+// IPv4
+//
 function calculateNetwork() {
     var newNetworkStr = document.getElementById("networkinput").value;
     var newMask = parseInt(document.getElementById('mask').value);
@@ -319,4 +334,203 @@ function address_classification(addr_list, cidr) {
 
     return ["Public IP space", "nolink"]
     
+}
+
+//IPv6
+function calculateNetworkv6() {
+    var newNetworkStr = document.getElementById("networkinputv6").value;
+    var newMask = parseInt(document.getElementById('maskv6').value);
+    
+    var newNetworkList = ipv6AddressToList(newNetworkStr);
+    if (newNetworkList === null) {
+        alert('Invalid network address entered');
+        return;
+    }
+    
+    if (newMask < 0) {
+        newMask = 1
+    }
+    
+    if (newMask > 128) {
+        newMask = 32
+    }
+    
+    outputValsv6(newNetworkList, newMask);
+    
+}
+
+function ipv6AddressToList(address) {
+    //fuck this regex lmao
+    //check if valid IPv6
+    var regex= /^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$/;
+    var result = regex.exec(address);
+
+    if (result == null) {
+        return null;
+    }
+
+    return expandIPv6Address(address)
+}
+
+function expandIPv6Address(address)
+{
+    var fullAddress = "";
+    var expandedAddress = "";
+    var validGroupCount = 8;
+    var validGroupSize = 4;
+
+    var ipv4 = "";
+    var extractIpv4 = /([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/;
+    var validateIpv4 = /((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})/;
+
+    // look for embedded ipv4
+    if(validateIpv4.test(address))
+    {
+        groups = address.match(extractIpv4);
+        for(var i=1; i<groups.length; i++)
+        {
+            ipv4 += ("00" + (parseInt(groups[i], 10).toString(16)) ).slice(-2) + ( i==2 ? ":" : "" );
+        }
+        address = address.replace(extractIpv4, ipv4);
+    }
+
+    if(address.indexOf("::") == -1) // All eight groups are present.
+        fullAddress = address;
+    else // Consecutive groups of zeroes have been collapsed with "::".
+    {
+        var sides = address.split("::");
+        var groupsPresent = 0;
+        for(var i=0; i<sides.length; i++)
+        {
+            groupsPresent += sides[i].split(":").length;
+        }
+        fullAddress += sides[0] + ":";
+        for(var i=0; i<validGroupCount-groupsPresent; i++)
+        {
+            fullAddress += "0000:";
+        }
+        fullAddress += sides[1];
+    }
+    var groups = fullAddress.split(":");
+    for(var i=0; i<validGroupCount; i++)
+    {
+        while(groups[i].length < validGroupSize)
+        {
+            groups[i] = "0" + groups[i];
+        }
+    }
+    return groups;
+}
+
+function outputValsv6(ipv6_address_list, cidr) {
+    
+    var ipv6netaddrinfo = IPv6infoddrFromList(ipv6_address_list, cidr);
+    
+    if (cidr == 128) {
+        
+        hostnum = 1
+        
+    } else {
+        hostnum = Math.pow(2, (128 - cidr))
+    }
+    /* expanded address */
+    document.getElementById('expandedaddrv6').innerText = ipv6_address_list.join(':');
+    
+    /* net mask */
+    document.getElementById('netaddrv6').innerText = ipv6netaddrinfo[0].join(':')
+    
+    /* total */
+    document.getElementById('totalipv6').innerText = hostnum.toLocaleString();
+    
+    /* useable addresses */
+    document.getElementById('usablerngv6').innerText = ipv6netaddrinfo[0].join(':') + " - " + ipv6netaddrinfo[2].join(':')
+
+    /* Current use 
+    curUse = address_classification(address_list)
+    document.getElementById("currentuse").innerText = curUse[0]
+    if (curUse[1] == "nolink") {
+        document.getElementById("currentuse").removeAttribute("href")
+    } else {
+        document.getElementById("currentuse").href = curUse[1]
+    }
+    */
+}
+
+function IPv6infoddrFromList(address_list, cidr) {
+    
+    if (cidr == 128) {
+        return [address_list, address_list, address_list];
+    }
+
+    //Convert hex groups into binary
+    var binaryList = []
+    for (var i = 0; i < address_list.length; i++) {
+        binaryList[i] = (parseInt(address_list[i], 16).toString(2)).padStart(16, '0');
+    }
+
+    //split then join so I have a 128 long array of binary
+    var fullBin = binaryList.join('').split('');
+
+    var fullNetAddrBin = fullBin.slice();
+    var fullLastAddrbin = fullBin.slice();
+
+    //console.log(fullNetAddrBin)
+
+    //Set all 0s if not masked by cidr
+    for (let i = cidr; i < 128; i++) {
+        fullNetAddrBin[i] = "0"; // set 0 for network address
+        fullLastAddrbin[i] = "1"; // set 1 for last address
+    }
+
+    //First address is network address with last bit set
+    var fullFirstAddrBin = fullNetAddrBin.slice();
+    fullFirstAddrBin[127] = "1";
+
+    console.log(fullNetAddrBin)
+    console.log(fullFirstAddrBin)
+    console.log(fullLastAddrbin)
+
+    var fullNetAddrBinRecombine = [];
+    var fullFirstAddrBinRecombine = [];
+    var fullLastAddrBinRecombine = [];
+
+
+    //recombine binary into 8 groups of 16
+    for (let i = 1; i < 9; i++) {
+        fullNetAddrBinRecombine[i-1] = fullNetAddrBin.slice(((i*16)-16), i*16).join('')
+        fullFirstAddrBinRecombine[i-1] = fullFirstAddrBin.slice(((i*16)-16), i*16).join('')
+        fullLastAddrBinRecombine[i-1] = fullLastAddrbin.slice(((i*16)-16), i*16).join('')
+    }
+
+    var netAddrRecombined = [];
+    var firstAddrRecombined = [];
+    var LastAddrRecombined = [];
+
+    //convert back into hex address list
+    for (let i = 0; i < 8; i++) {
+        netAddrRecombined[i] = parseInt(fullNetAddrBinRecombine[i], 2).toString(16).padStart(4, '0');
+        firstAddrRecombined[i] = parseInt(fullFirstAddrBinRecombine[i], 2).toString(16).padStart(4, '0');
+        LastAddrRecombined[i] = parseInt(fullLastAddrBinRecombine[i], 2).toString(16).padStart(4, '0');
+    }
+    console.log(netAddrRecombined)
+    console.log(firstAddrRecombined)
+    console.log(LastAddrRecombined)
+
+    return [netAddrRecombined, firstAddrRecombined, LastAddrRecombined];
+
+}
+
+// Tab switching code
+function tabswitch(evt, tabname) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabname).style.display = "block";
+  evt.currentTarget.className += " active";
 }

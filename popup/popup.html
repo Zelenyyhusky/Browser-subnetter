@@ -5,78 +5,146 @@
 </head>
   <body>
     <h2>Pat's Subnet Calculator</h2>
+
+    <div class="tab">
+    <button id="ipv4button" class="tablinks" onclick="tabswitch(event, 'ipv4')">IPv4</button>
+    <button class="tablinks" onclick="tabswitch(event, 'ipv6')">IPv6</button>
+    </div>
+
+    <div id="ipv4" class="tabcontent">
+            <tr>
+                <td>
+                    <input type="text" id="networkinput" size="15" maxlength="15" value="192.168.128.0">
+                </td>
+                <td>
+                    /
+                </td>
+                <td>
+                    <input type="text" id="mask" size="2" maxlength="2" value="24">
+                </td>
+                <td>
+                    <Button id="SubmitButton" class="gobutton">Go!</Button>
+                </td>
+            </tr>
+        <hr>
+        <table>
         <tr>
-            <td>
-                <input type="text" id="networkinput" size="15" maxlength="15" value="192.168.128.0">
+            <th>
+                <p>Network Address</p>
             </td>
             <td>
-                /
-            </td>
-            <td>
-                <input type="text" id="mask" size="2" maxlength="2" value="24">
-            </td>
-            <td>
-                <Button id="SubmitButton">Go!</Button>
+                <p id="netaddr">192.168.128.0</p>
             </td>
         </tr>
-    <hr>
-    <table>
-    <tr>
-        <th>
-            <p>Network Address</p>
-        </td>
-        <td>
-            <p id="netaddr">192.168.128.0</p>
-        </td>
-    </tr>
-    <tr>
-        <th>
-            <p>Broadcast Address</p>
-        </th>
-        <td>
-            <p id="broadcastaddr">192.168.128.255</p>
-        </td>
-    </tr>
-    <tr>
-        <th>
-            <p>Subnet Mask</p>
-        </td>
-        <td>
-            <p id="netmask">255.255.255.0</p>
-        </td>
-    </tr>
-    <tr>
-        <th>
-            <p>Wildcard Mask</p>
-        </td>
-        <td>
-            <p id="wildmask">0.0.0.255</p>
-        </td>
-    </tr>
-    <tr>
-        <th>
-            <p>Usable Range</p>
-        </th>
-        <td>
-            <p id="usablerng">192.168.128.1 - 192.168.128.254</p>
-        </td>
-    </tr>
-    <tr>
-        <th>
-            <p>Host Count</p>
-        </th>
-        <td>
-            <p id="hostcount">254</p>
-        </td>
-    </tr>
-    <tr>
-        <th>
-            <p>Current Use</p>
-        </th>
-        <td>
-            <a id="currentuse" href="https://www.rfc-editor.org/rfc/rfc1918.html">Private-Use</a>
-        </td>
-    </tr>
-    </table>   
+        <tr>
+            <th>
+                <p>Broadcast Address</p>
+            </th>
+            <td>
+                <p id="broadcastaddr">192.168.128.255</p>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <p>Subnet Mask</p>
+            </td>
+            <td>
+                <p id="netmask">255.255.255.0</p>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <p>Wildcard Mask</p>
+            </td>
+            <td>
+                <p id="wildmask">0.0.0.255</p>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <p>Usable Range</p>
+            </th>
+            <td>
+                <p id="usablerng">192.168.128.1 - 192.168.128.254</p>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <p>Host Count</p>
+            </th>
+            <td>
+                <p id="hostcount">254</p>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <p>Current Use</p>
+            </th>
+            <td>
+                <a id="currentuse" href="https://www.rfc-editor.org/rfc/rfc1918.html">Private-Use</a>
+            </td>
+        </tr>
+        </table>
+    </div>   
+
+    <div id="ipv6" class="tabcontent" style="display: none;">
+            <tr>
+                <td>
+                    <input type="text" id="networkinputv6" size="40" maxlength="40" value="2001:db8:85a3::8a2e:370:7334">
+                </td>
+                <td>
+                    /
+                </td>
+                <td>
+                    <input type="text" id="maskv6" size="3" maxlength="3" value="64">
+                </td>
+                <td>
+                    <Button id="SubmitButtonv6" class="gobutton">Go!</Button>
+                </td>
+            </tr>
+        <hr>
+        <table class="ipv6table">
+        <tr>
+            <th>
+                <p>Expanded Address</p>
+            </td>
+            <td>
+                <p id="expandedaddrv6">192.168.128.0</p>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <p>Network Address</p>
+            </th>
+            <td>
+                <p id="netaddrv6">192.168.128.255</p>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <p>Total IP addresses</p>
+            </td>
+            <td>
+                <p id="totalipv6">255.255.255.0</p>
+            </td>
+        </tr>
+            <th>
+                <p>Usable Range</p>
+            </th>
+            <td>
+                <p id="usablerngv6">192.168.128.1 - 192.168.128.254</p>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <p>Current Use</p>
+            </th>
+            <td>
+                <a id="currentuse" href="https://www.rfc-editor.org/rfc/rfc1918.html">Private-Use</a>
+            </td>
+        </tr>
+        </table>
+    </div>   
+
   </body>
 </html>
