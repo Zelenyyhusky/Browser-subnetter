@@ -425,7 +425,7 @@ function expandIPv6Address(address)
 function outputValsv6(ipv6_address_list, cidr) {
     
     var ipv6netaddrinfo = IPv6infoddrFromList(ipv6_address_list, cidr);
-    
+    var shorten = shortenIPv6FromList(ipv6_address_list);
     if (cidr == 128) {
         
         hostnum = 1
@@ -436,6 +436,9 @@ function outputValsv6(ipv6_address_list, cidr) {
     /* expanded address */
     document.getElementById('expandedaddrv6').innerText = ipv6_address_list.join(':');
     
+    /* shorten address */
+    document.getElementById('shortenedv6').innerText = shorten.join(":")
+
     /* net mask */
     document.getElementById('netaddrv6').innerText = ipv6netaddrinfo[0].join(':')
     
@@ -474,8 +477,6 @@ function IPv6infoddrFromList(address_list, cidr) {
     var fullNetAddrBin = fullBin.slice();
     var fullLastAddrbin = fullBin.slice();
 
-    //console.log(fullNetAddrBin)
-
     //Set all 0s if not masked by cidr
     for (let i = cidr; i < 128; i++) {
         fullNetAddrBin[i] = "0"; // set 0 for network address
@@ -486,9 +487,6 @@ function IPv6infoddrFromList(address_list, cidr) {
     var fullFirstAddrBin = fullNetAddrBin.slice();
     fullFirstAddrBin[127] = "1";
 
-    console.log(fullNetAddrBin)
-    console.log(fullFirstAddrBin)
-    console.log(fullLastAddrbin)
 
     var fullNetAddrBinRecombine = [];
     var fullFirstAddrBinRecombine = [];
@@ -512,12 +510,52 @@ function IPv6infoddrFromList(address_list, cidr) {
         firstAddrRecombined[i] = parseInt(fullFirstAddrBinRecombine[i], 2).toString(16).padStart(4, '0');
         LastAddrRecombined[i] = parseInt(fullLastAddrBinRecombine[i], 2).toString(16).padStart(4, '0');
     }
-    console.log(netAddrRecombined)
-    console.log(firstAddrRecombined)
-    console.log(LastAddrRecombined)
 
     return [netAddrRecombined, firstAddrRecombined, LastAddrRecombined];
 
+}
+
+function shortenIPv6FromList(addr_list) {
+
+    var flag = true;
+    //remove leading 0s
+    
+    var addr_copy_list = addr_list.slice();
+
+    for (let i = 0; i < addr_copy_list.length; i++) {
+        addr_copy_list[i] = addr_copy_list[i].replace(/^0+/, '');
+        if (addr_copy_list[i] == '') {
+            addr_copy_list[i] = "0";
+            var flag = false;
+        }
+    }
+
+    //shorten grouped 0s once
+    var groupcount = 0;
+    var splicestart = 0;
+    
+    for (let i = 0; i <= addr_copy_list.length; i++) {
+        if (flag == true) {
+            break;
+        }
+        if (addr_copy_list[i] == '0') {
+            if (groupcount == 0) {
+                splicestart = i;
+            }
+            groupcount++;
+        } else if ((addr_copy_list[i] != "0" && groupcount >= 2) || (i == addr_copy_list.length && groupcount <= 2)) {
+            addr_copy_list.splice(splicestart, groupcount, "");
+            if(splicestart == 0) {
+                addr_copy_list.splice(0,0,"");
+                if (groupcount == 8) {addr_copy_list.splice(0,0,"")}
+            }
+            flag = true;
+        } else {
+            groupcount = 0;
+        }
+    }
+
+    return(addr_copy_list);
 }
 
 // Tab switching code
