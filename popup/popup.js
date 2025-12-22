@@ -2,6 +2,7 @@ var curNetwork = 0;
 var curMask = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
+    // IPv4 network calc
     document.getElementById('SubmitButton').addEventListener('click', calculateNetwork);
     document.getElementById('networkinput').addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('SubmitButton').click();
         }
     });
+    // IPv6 network calc
     document.getElementById('SubmitButtonv6').addEventListener('click', calculateNetworkv6);
     document.getElementById('networkinputv6').addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
@@ -28,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('SubmitButtonv6').click();
         }
     });
+    // tab switch code
+    document.getElementById('ipv4button').addEventListener('click', tabswitch);
+    document.getElementById('ipv6button').addEventListener('click', tabswitchv6);
 });
 
 
@@ -559,16 +564,12 @@ function shortenIPv6FromList(addr_list) {
 }
 
 // Tab switching code
-function tabswitch(evt, tabname) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(tabname).style.display = "block";
-  evt.currentTarget.className += " active";
+function tabswitch() {
+    document.getElementById('ipv4').style.display = "block";
+    document.getElementById('ipv6').style.display = "none";
+}
+
+function tabswitchv6() {
+    document.getElementById('ipv6').style.display = "block";
+    document.getElementById('ipv4').style.display = "none";
 }

@@ -1,5 +1,5 @@
 body {
-  width: 300px; /* your desired width */
+  width: 440px; /* your desired width */
   height: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -18,7 +18,7 @@ table, th, td {
 #ipv6 table {
   border:1px solid black;
   border-collapse: collapse;
-  width: 420px;
+  width: 425px;
   text-align: left;
   padding: 2px;
 }
