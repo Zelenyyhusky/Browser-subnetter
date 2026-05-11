@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('SubmitButton').click();
         }
     });
-    document.getElementById('mask').addEventListener("keypress", function(event) {
+    document.getElementById('subnets').addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
             document.getElementById('SubmitButton').click();
