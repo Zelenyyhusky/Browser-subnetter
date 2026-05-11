@@ -64,6 +64,9 @@ function calculateNetwork() {
 function outputVals(address, cidr) {
     address_list = addr_to_list(address)
     
+    mask_list = mask_list_from_cidr(cidr)
+    wildcard_list = wildcard_from_mask(mask_list)
+    
     if (cidr == 32) {
         
         netaddress_list = address_list
@@ -75,10 +78,7 @@ function outputVals(address, cidr) {
         
     } else {
         
-        mask_list = mask_list_from_cidr(cidr)
-        
         netaddress_list = netaddr_from_addr_list(address_list, mask_list)
-        wildcard_list = wildcard_from_mask(mask_list)
         broadcast_list = broadcast_from_addr_list(netaddress_list, wildcard_list)
         
         lowaddr_list = netaddress_list.slice()
