@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function () {
 //
 function calculateNetwork() {
     var newNetworkStr = document.getElementById("networkinput").value;
-    var newMask = parseInt(document.getElementById('mask').value);
-    
+    var newMask = parseInt(document.querySelector('#subnets').value);
+
     var newNetwork = inet_aton(newNetworkStr);
     if (newNetwork === null) {
         alert('Invalid network address entered');
@@ -66,7 +66,7 @@ function outputVals(address, cidr) {
     
     mask_list = mask_list_from_cidr(cidr)
     wildcard_list = wildcard_from_mask(mask_list)
-    
+
     if (cidr == 32) {
         
         netaddress_list = address_list
